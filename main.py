@@ -21,9 +21,9 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 REDIS_URL = os.getenv("REDIS_URL")
 
 OUTPUT_DIR = "pyrogram_recordings"
-OWNER_IDS = [7857898495] # List of owner IDs
+OWNER_IDS = [6407533831] # List of owner IDs
 APPROVED_USERS = []
-BRANDING = "🔗 Join Channel:- @ShinchanBannedMovies" #HeheRemovekarnabrandingmerachannel ki thik bhai
+BRANDING = "🔗 Join Channel:- @DorutoChan" #HeheRemovekarnabrandingmerachannel ki thik bhai
 
 MAX_FILE_SIZE = 1.9 * 1024 * 1024 * 1024  # 1.9 GB in bytes
 
