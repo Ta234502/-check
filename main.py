@@ -15,10 +15,10 @@ from PIL import Image
 import redis
 
 # ===== CONFIG =====
-API_ID = 12345678
-API_HASH = "humeshasukhirhoadcdegaidurijdrj284"
-BOT_TOKEN = "Mera Bot Token Mst Dhundho Apna Dalo"
-REDIS_URL = os.environ.get('REDIS_URL')
+API_ID = int(os.getenv("API_ID"))
+API_HASH = os.getenv("API_HASH")
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+REDIS_URL = os.getenv("REDIS_URL")
 
 OUTPUT_DIR = "pyrogram_recordings"
 OWNER_IDS = [7857898495] # List of owner IDs
