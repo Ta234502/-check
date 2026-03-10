@@ -389,21 +389,21 @@ async def execute_ffmpeg_recording(chat_id, job_id, m3u8_url, duration, output_p
         ]
 
         if video_track:
-            cmd.extend([
-                "-map", f"0:{video_track['index']}",
-                "-c:v", "copy"
-            ])
-        else:
-            cmd.extend(["-vn"])
+    cmd.extend([
+        "-map", f"0:{video_track['index']}?",
+        "-c:v", "copy"
+    ])
+else:
+    cmd.extend(["-vn"])
 
-        if audio_maps:
-            for audio_idx in audio_maps:
-                cmd.extend(["-map", f"0:{audio_idx}", "-c:a", "copy"])
-        else:
-            cmd.extend(["-an"])
-        
-        if not video_track and not audio_maps:
-             return False
+if audio_maps:
+    for audio_idx in audio_maps:
+        cmd.extend(["-map", f"0:{audio_idx}?", "-c:a", "copy"])
+else:
+    cmd.extend(["-an"])
+
+if not video_track and not audio_maps:
+     return False
 
         cmd.extend([
             "-dn", "-sn", "-ignore_unknown", # DISABLE DATA/EPG AND SUBTITLES TO PREVENT CRASH
