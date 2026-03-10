@@ -2,3 +2,5 @@ pyrogram
 tgcrypto
 pillow
 redis
+aiofiles
+async-timeout
