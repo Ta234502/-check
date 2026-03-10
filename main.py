@@ -388,7 +388,7 @@ async def execute_ffmpeg_recording(chat_id, job_id, m3u8_url, duration, output_p
             "-i", m3u8_url,
         ]
 
-if if video_track:
+if video_track:
             cmd.extend([
                 "-map", f"0:{video_track['index']}?",
                 "-c:v", "copy"
