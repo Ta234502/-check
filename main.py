@@ -406,7 +406,7 @@ if video_track:
             cmd.extend(["-an"])
 
         if not video_track and not audio_maps:
-            return False
+            return False #fix
 
         cmd.extend([
             "-dn", "-sn", "-ignore_unknown", # DISABLE DATA/EPG AND SUBTITLES TO PREVENT CRASH
