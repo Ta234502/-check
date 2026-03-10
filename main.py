@@ -15,15 +15,17 @@ from PIL import Image
 import redis
 
 # ===== CONFIG =====
-API_ID = 12345678
-API_HASH = "humeshasukhirhoadcdegaidurijdrj284"
-BOT_TOKEN = "Mera Bot Token Mst Dhundho Apna Dalo"
-REDIS_URL = os.environ.get('REDIS_URL')
+import os
+
+API_ID = int(os.environ.get("API_ID"))
+API_HASH = os.environ.get("API_HASH")
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
+REDIS_URL = os.environ.get("REDIS_URL")
 
 OUTPUT_DIR = "pyrogram_recordings"
-OWNER_IDS = [7857898495] # List of owner IDs
+OWNER_IDS = [6407533831] # List of owner IDs
 APPROVED_USERS = []
-BRANDING = "🔗 Join Channel:- @ShinchanBannedMovies" #HeheRemovekarnabrandingmerachannel ki thik bhai
+BRANDING = "🔗 Join Channel:- @DorutoChan" #HeheRemovekarnabrandingmerachannel ki thik bhai
 
 MAX_FILE_SIZE = 1.9 * 1024 * 1024 * 1024  # 1.9 GB in bytes
 
