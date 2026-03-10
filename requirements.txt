@@ -4,3 +4,4 @@ pillow
 redis
 aiofiles
 async-timeout
+ffmpeg
