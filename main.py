@@ -13,7 +13,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from PIL import Image
 import redis
 
-===== CONFIG =====
+# ===== CONFIG =====
 
 API_ID = 13516702
 API_HASH = "bf0cc3f062841935d3d5da65134ca4cf"
@@ -29,12 +29,12 @@ MAX_FILE_SIZE = 1.9 * 1024 * 1024 * 1024
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-===== THUMBNAIL SYSTEM =====
+# ===== THUMBNAIL SYSTEM =====
 
 user_thumbnails = {}
 THUMB_TIMEOUT = 43200  # 12 hours
 
-===== CLIENT SETUP =====
+# ===== CLIENT SETUP =====
 
 app = Client(
 "my_pyrogram_session",
@@ -116,7 +116,7 @@ d, _, _ = get_video_attributes(file_path)
 
 return d
 
-===== TS → MP4 CONVERTER =====
+# ===== TS → MP4 CONVERTER =====
 
 def convert_ts_to_mp4(ts_path, mp4_path):
 
@@ -151,7 +151,7 @@ except Exception as e:
 
     return False
 
-===== METADATA FIX =====
+# ===== METADATA FIX =====
 
 def fix_video_metadata(file_path):
 
@@ -188,7 +188,7 @@ except Exception as e:
 
     return False
 
-===== THUMBNAIL GENERATOR =====
+# ===== THUMBNAIL GENERATOR =====
 
 def generate_thumbnail(video_path):
 
@@ -232,7 +232,7 @@ except Exception as e:
 
 return None
 
-===== VIDEO SPLITTER =====
+# ===== VIDEO SPLITTER =====
 
 def split_video_by_size(input_file, max_size, output_dir):
 
@@ -295,7 +295,7 @@ except Exception as e:
     print(f"Split error: {e}")
 
     return [input_file]
-    ===== UPLOAD SYSTEM WITH PROGRESS =====
+   # ===== UPLOAD SYSTEM WITH PROGRESS =====
 
 async def upload_file_with_progress(client, chat_id, file_path, caption, thumb_path=None, msg_id=None, is_temp=False):
 
@@ -635,7 +635,7 @@ except Exception as e:
 
     return False
 
-===== QUEUE WORKER =====
+# ===== QUEUE WORKER =====
 
 async def worker():
 
@@ -707,7 +707,7 @@ while True:
 
         if os.path.exists(temp_ts_path):
             os.remove(temp_ts_path)
-            ===== USER MANAGEMENT =====
+         # ===== USER MANAGEMENT =====
 
 def load_approved_users():
 
@@ -764,7 +764,7 @@ async def wrapper(client, message):
 
 return wrapper
 
-===== START COMMAND =====
+# ===== START COMMAND =====
 
 @app.on_message(filters.command("start") & filters.private)
 @is_approved_user
@@ -781,7 +781,7 @@ await message.reply_text(
 
 )
 
-===== SET THUMBNAIL =====
+# ===== SET THUMBNAIL =====
 
 @app.on_message(filters.command("set_thumbnail") & filters.private)
 @is_approved_user
@@ -812,7 +812,7 @@ pending_states.pop(message.from_user.id)
 
 await message.reply_text("✅ Thumbnail saved for 12 hours")
 
-===== REMOVE THUMBNAIL =====
+# ===== REMOVE THUMBNAIL =====
 
 @app.on_message(filters.command("remove_thumbnail") & filters.private)
 @is_approved_user
@@ -835,7 +835,7 @@ else:
 
     await message.reply_text("❌ No thumbnail set")
 
-===== RECORD COMMAND =====
+# ===== RECORD COMMAND =====
 
 @app.on_message(filters.command("record") & filters.private)
 @is_approved_user
@@ -941,7 +941,7 @@ await job_queue.put({
 
 await msg.edit_text("✅ Recording added to queue")
 
-===== STATUS =====
+# ===== STATUS =====
 
 @app.on_message(filters.command("status") & filters.private)
 @is_approved_user
@@ -958,7 +958,7 @@ await message.reply_text(
 
 )
 
-===== CANCEL =====
+# ===== CANCEL =====
 
 @app.on_message(filters.command("cancel") & filters.private)
 @is_approved_user
@@ -975,7 +975,7 @@ for job_id in list(running_jobs.keys()):
 
 await message.reply_text("❌ All running jobs cancelled")
 
-===== BOT START =====
+# ===== BOT START =====
 
 async def start_bot():
 
@@ -989,7 +989,7 @@ print("✅ Bot started")
 
 await asyncio.gather(*workers)
 
-===== QUEUE COMMAND =====
+# ===== QUEUE COMMAND =====
 
 @app.on_message(filters.command("queue") & filters.private)
 @is_approved_user
@@ -1015,7 +1015,7 @@ if running_size > 0:
 
 await message.reply_text(text)
 
-===== AUTO CLEANUP SYSTEM =====
+# ===== AUTO CLEANUP SYSTEM =====
 
 async def cleanup_temp_files():
 
@@ -1049,7 +1049,7 @@ while True:
 
     await asyncio.sleep(600)
 
-===== BEST QUALITY VIDEO SELECT =====
+# ===== BEST QUALITY VIDEO SELECT =====
 
 def select_best_video(videos):
 
@@ -1067,7 +1067,7 @@ for v in videos:
 
 return best
 
-===== BOT START IMPROVED =====
+# ===== BOT START IMPROVED =====
 
 async def start_bot():
 
