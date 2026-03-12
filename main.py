@@ -13,6 +13,8 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from PIL import Image
 import redis
 
+SONY_HEADERS = "Referer: https://www.sonyliv.com/\r\nUser-Agent: Mozilla/5.0"
+
 # ===== CONFIG =====
 API_ID = 13516702
 API_HASH = "bf0cc3f062841935d3d5da65134ca4cf"
@@ -54,13 +56,11 @@ def get_video_attributes(file_path):
     """
     try:
         proc = subprocess.run(
-            ["ffprobe", "-v", "error", "-select_streams", "v:0",
-             "-show_entries", "stream=width,height,duration",
-             "-show_entries", "format=duration",
-             "-of", "json", file_path],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            check=False
+    ["ffprobe", "-headers", SONY_HEADERS,
+     "-v", "error",
+     "-select_streams", "v:0",
+     "-show_entries", "stream=width,height,duration",
+     "-show_entries", "format=duration"]
         )
         output = proc.stdout.decode().strip()
         if not output:
@@ -422,15 +422,18 @@ async def execute_ffmpeg_recording(chat_id, job_id, m3u8_url, duration, final_ou
     "ffmpeg", "-y",
     "-hide_banner", "-loglevel", "error",
     "-rw_timeout", "20000000",
-    "-analyzeduration", "20000000", "-probesize", "20000000",
+    "-analyzeduration", "20000000",
+    "-probesize", "20000000",
     "-user_agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-    "-headers", "Referer: https://www.sonyliv.com/",
-    "-reconnect", "1", "-reconnect_streamed", "1", "-reconnect_delay_max", "10",
+    "-headers", "Referer: https://www.sonyliv.com/\r\n",
+    "-reconnect", "1",
+    "-reconnect_streamed", "1",
+    "-reconnect_delay_max", "10",
     "-reconnect_at_eof", "1",
     "-fflags", "+genpts+discardcorrupt",
     "-err_detect", "ignore_err",
     "-i", m3u8_url,
-]
+        ]
 
         if video_track:
             cmd.extend([
