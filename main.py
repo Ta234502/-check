@@ -778,12 +778,14 @@ async def record_handler(client, message):
 
     try:
         # Added timeout to ffprobe to prevent hanging on dead links
-        proc = await asyncio.create_subprocess_exec(
-            "ffprobe", "-v", "error", "-show_streams", "-print_format", "json",
-            "-user_agent", "Mozilla/5.0", "-rw_timeout", "10000000", m3u8_url,
-            stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
-        )
-        out, err = await asyncio.wait_for(proc.communicate(), timeout=20.0)
+proc = await asyncio.create_subprocess_exec(
+    "ffprobe", "-v", "error",
+    "-headers", "Referer: https://www.sonyliv.com/\r\nOrigin: https://www.sonyliv.com\r\nUser-Agent: Mozilla/5.0\r\n",
+    "-show_streams", "-print_format", "json",
+    "-rw_timeout", "10000000", m3u8_url,
+    stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+)
+out, err = await asyncio.wait_for(proc.communicate(), timeout=20.0)
         
         if proc.returncode != 0:
             raise Exception(f"FFprobe error: {err.decode()}")
