@@ -419,17 +419,18 @@ async def execute_ffmpeg_recording(chat_id, job_id, m3u8_url, duration, final_ou
         # Output options (like -max_muxing_queue_size) must be AFTER -i
         
         cmd = [
-            "ffmpeg", "-y",
-            "-hide_banner", "-loglevel", "error",
-            "-rw_timeout", "20000000",
-            "-analyzeduration", "20000000", "-probesize", "20000000",
-            "-user_agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-            "-reconnect", "1", "-reconnect_streamed", "1", "-reconnect_delay_max", "10",
-            "-reconnect_at_eof", "1",
-            "-fflags", "+genpts+discardcorrupt",
-            "-err_detect", "ignore_err",
-            # "-max_muxing_queue_size" removed from here (it was the cause of the error)
-            "-i", m3u8_url, # Input URL
+    "ffmpeg", "-y",
+    "-hide_banner", "-loglevel", "error",
+    "-rw_timeout", "20000000",
+    "-analyzeduration", "20000000", "-probesize", "20000000",
+    "-user_agent", "Mozilla/5.0",
+    "-headers", "Referer: https://www.sonyliv.com\r\nOrigin: https://www.sonyliv.com\r\n",
+    "-reconnect", "1", "-reconnect_streamed", "1",
+    "-reconnect_delay_max", "10",
+    "-reconnect_at_eof", "1",
+    "-fflags", "+genpts+discardcorrupt",
+    "-err_detect", "ignore_err",
+    "-i", m3u8_url,
         ]
 
         if video_track:
