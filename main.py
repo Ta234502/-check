@@ -51,7 +51,7 @@ main_loop = asyncio.get_event_loop()
 
 redis_client = None
 
-===== VIDEO ATTRIBUTES =====
+# ===== VIDEO ATTRIBUTES =====
 
 def get_video_attributes(file_path):
 
