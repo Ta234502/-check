@@ -818,6 +818,7 @@ for stream in info.get("streams", []):
 
 
 pending_states.setdefault(chat_id, {})[job_id] = {
+pending_states.setdefault(chat_id, {})[job_id] = {
     'msg_id': msg.id,
     'cancelled': False,
     'url': m3u8_url,
@@ -832,12 +833,13 @@ pending_states.setdefault(chat_id, {})[job_id] = {
     'starter_user_id': user_id
 }
 
-    if audio_only:
-        if not audios:
-            return await msg.edit_text("❌ No audio tracks found for `--audio-only`!")
-        sel = pending_states[chat_id][job_id]
-        sel['selected_video'] = None
-        sel['selected_audios'] = [str(a['index']) for a in audios]
+if audio_only:
+    if not audios:
+        return await msg.edit_text("❌ No audio tracks found for `--audio-only`!")
+
+    sel = pending_states[chat_id][job_id]
+    sel['selected_video'] = None
+    sel['selected_audios'] = [str(a['index']) for a in audios]
         job_details = {
             'chat_id': chat_id, 'job_id': job_id, 'url': sel["url"],
             'duration': sel["duration"], 'filename': sel["filename"],
