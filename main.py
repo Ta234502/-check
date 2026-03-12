@@ -776,7 +776,7 @@ async def record_handler(client, message):
 
     msg = await message.reply_text(f"🎬 Recording Job #{job_id} initialized!\n🔍 Fetching stream info (This may take a moment)...")
 
-    try:
+try:
     # Added timeout to ffprobe to prevent hanging on dead links
     proc = await asyncio.create_subprocess_exec(
         "ffprobe", "-v", "error",
@@ -798,27 +798,39 @@ except asyncio.TimeoutError:
 
 except Exception as e:
     return await msg.edit_text(f"❌ Could not get stream info: {e}")
-    videos, audios = [], []
-    for stream in info.get("streams", []):
-        if stream.get("codec_type") == "video" and stream.get("width") and stream.get("height"):
-            videos.append({"index": stream["index"], "width": stream["width"], "height": stream["height"]})
-        elif stream.get("codec_type") == "audio":
-            audios.append({"index": stream["index"], "language": stream.get("tags", {}).get("language")})
 
-    pending_states.setdefault(chat_id, {})[job_id] = {
-        'msg_id': msg.id,
-        'cancelled': False,
-        'url': m3u8_url,
-        'duration': duration,
-        'filename': final_output_path,
-        'videos': videos,
-        'audios': audios,
-        'selected_video': None,
-        'selected_audios': [],
-        'audio_only': audio_only,
-        'video_only': video_only,
-        'starter_user_id': user_id
-    }
+
+videos, audios = [], []
+
+for stream in info.get("streams", []):
+    if stream.get("codec_type") == "video" and stream.get("width") and stream.get("height"):
+        videos.append({
+            "index": stream["index"],
+            "width": stream["width"],
+            "height": stream["height"]
+        })
+
+    elif stream.get("codec_type") == "audio":
+        audios.append({
+            "index": stream["index"],
+            "language": stream.get("tags", {}).get("language")
+        })
+
+
+pending_states.setdefault(chat_id, {})[job_id] = {
+    'msg_id': msg.id,
+    'cancelled': False,
+    'url': m3u8_url,
+    'duration': duration,
+    'filename': final_output_path,
+    'videos': videos,
+    'audios': audios,
+    'selected_video': None,
+    'selected_audios': [],
+    'audio_only': audio_only,
+    'video_only': video_only,
+    'starter_user_id': user_id
+}
 
     if audio_only:
         if not audios:
