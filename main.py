@@ -15,14 +15,14 @@ import redis
 
 # ===== CONFIG =====
 API_ID = 18373837
-API_HASH = "sjjdidjeidkekdlkeisjeidjekd"
-BOT_TOKEN = "757S31Jm27QXYrCuI0xw"
+API_HASH = "13516702"
+BOT_TOKEN = "8672443548:AAEtMfETNHyp-8DbxIkuSSJJBRUtbX7br_M"
 REDIS_URL = os.environ.get('REDIS_URL')
 
 OUTPUT_DIR = "pyrogram_recordings"
-OWNER_IDS = [7857898495, 37478384883]  # List of owner IDs
+OWNER_IDS = [6407533831]  # List of owner IDs
 APPROVED_USERS = []
-BRANDING = "🔗 Join Channel:- @ShinchanBannedMovies"
+BRANDING = "🔗 Join Channel:- @DorutoChan"
 
 MAX_FILE_SIZE = 1.9 * 1024 * 1024 * 1024  # 1.9 GB in bytes
 
