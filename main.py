@@ -777,25 +777,27 @@ async def record_handler(client, message):
     msg = await message.reply_text(f"🎬 Recording Job #{job_id} initialized!\n🔍 Fetching stream info (This may take a moment)...")
 
     try:
-        # Added timeout to ffprobe to prevent hanging on dead links
-proc = await asyncio.create_subprocess_exec(
-    "ffprobe", "-v", "error",
-    "-headers", "Referer: https://www.sonyliv.com/\r\nOrigin: https://www.sonyliv.com\r\nUser-Agent: Mozilla/5.0\r\n",
-    "-show_streams", "-print_format", "json",
-    "-rw_timeout", "10000000", m3u8_url,
-    stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
-)
-out, err = await asyncio.wait_for(proc.communicate(), timeout=20.0)
-        
-        if proc.returncode != 0:
-            raise Exception(f"FFprobe error: {err.decode()}")
-            
-        info = json.loads(out.decode())
-    except asyncio.TimeoutError:
-        return await msg.edit_text("❌ Error: Stream URL timed out. The server is not responding.")
-    except Exception as e:
-        return await msg.edit_text(f"❌ Could not get stream info: {e}")
+    # Added timeout to ffprobe to prevent hanging on dead links
+    proc = await asyncio.create_subprocess_exec(
+        "ffprobe", "-v", "error",
+        "-headers", "Referer: https://www.sonyliv.com/\r\nOrigin: https://www.sonyliv.com\r\nUser-Agent: Mozilla/5.0\r\n",
+        "-show_streams", "-print_format", "json",
+        "-rw_timeout", "10000000", m3u8_url,
+        stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+    )
 
+    out, err = await asyncio.wait_for(proc.communicate(), timeout=20.0)
+
+    if proc.returncode != 0:
+        raise Exception(f"FFprobe error: {err.decode()}")
+
+    info = json.loads(out.decode())
+
+except asyncio.TimeoutError:
+    return await msg.edit_text("❌ Error: Stream URL timed out. The server is not responding.")
+
+except Exception as e:
+    return await msg.edit_text(f"❌ Could not get stream info: {e}")
     videos, audios = [], []
     for stream in info.get("streams", []):
         if stream.get("codec_type") == "video" and stream.get("width") and stream.get("height"):
