@@ -15,8 +15,8 @@ import redis
 
 # ===== CONFIG =====
 API_ID = 13516702
-API_HASH = "8698277473:AAEkWMwudRlP3LvfU66zIT5hIMydmBjuTC0"
-BOT_TOKEN = "bf0cc3f062841935d3d5da65134ca4cf"
+API_HASH = "bf0cc3f062841935d3d5da65134ca4cf"
+BOT_TOKEN = "8698277473:AAH5fZ35MB4JxbmrApMs5Ez9l78DRpsZqMw"
 REDIS_URL = os.environ.get('REDIS_URL')
 
 OUTPUT_DIR = "pyrogram_recordings"
