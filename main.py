@@ -14,8 +14,8 @@ from PIL import Image
 import redis
 
 # ===== CONFIG =====
-API_ID = 18373837
-API_HASH = "13516702"
+API_ID = 13516702
+API_HASH = "bf0cc3f062841935d3d5da65134ca4cf"
 BOT_TOKEN = "8672443548:AAEtMfETNHyp-8DbxIkuSSJJBRUtbX7br_M"
 REDIS_URL = os.environ.get('REDIS_URL')
 
