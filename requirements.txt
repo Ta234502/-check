@@ -1,7 +1,4 @@
-pyrogram
-tgcrypto
-pillow
-redis
-aiofiles
-async-timeout
-ffmpeg
+pyrogram==2.0.106
+TgCrypto>=1.2.5
+redis>=5.0.0
+Pillow>=10.0.0
