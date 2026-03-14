@@ -127,23 +127,15 @@ async def check_fsub(user_id: int) -> bool:
 
 
 async def ensure_user_allowed(message):
-    return True
-    uid = user.id
-    if is_banned(uid):
-        return False
-    if uid not in APPROVED_USERS:
-        await message.reply_text("🚫 Sorry, you are not approved to use this bot. Please contact the owner.")
-        return False
-    if not await check_fsub(uid):
-        await message.reply_text(
-            f"❌ Join @{FSUB_CHANNEL} to use this bot!",
-            reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton("Join Channel", url=f"https://t.me/{FSUB_CHANNEL}")]]
-            ),
-        )
-        return False
+async def ensure_user_allowed(message):
     return True
 
+
+async def ensure_owner(message) -> bool:
+    if not message.from_user or message.from_user.id not in OWNER_IDS:
+        await message.reply_text("🚫 Sorry, this command is only for the bot owner(s).")
+        return False
+    return True
 
 async def ensure_owner(message) -> bool:
     if not message.from_user or message.from_user.id not in OWNER_IDS:
