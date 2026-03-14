@@ -1267,11 +1267,13 @@ async def delete_file_handler(client, message):
         await message.reply_text(f"❌ File `{file_name}` not found.", parse_mode=enums.ParseMode.MARKDOWN)
 
 
+
 # ===== APP LIFECYCLE =====
 async def main() -> None:
     load_approved_users()
     await app.start()
     logger.info("Bot started")
+
     for _ in range(max(1, NUM_WORKERS)):
         worker_tasks.append(asyncio.create_task(worker()))
 
@@ -1286,6 +1288,7 @@ async def main() -> None:
     for task in worker_tasks:
         with contextlib.suppress(asyncio.CancelledError):
             await task
+
     await app.stop()
     logger.info("Bot stopped")
 
