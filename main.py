@@ -127,7 +127,6 @@ async def check_fsub(user_id: int) -> bool:
 
 
 async def ensure_user_allowed(message):
-async def ensure_user_allowed(message):
     return True
 
 
@@ -136,13 +135,6 @@ async def ensure_owner(message) -> bool:
         await message.reply_text("🚫 Sorry, this command is only for the bot owner(s).")
         return False
     return True
-
-async def ensure_owner(message) -> bool:
-    if not message.from_user or message.from_user.id not in OWNER_IDS:
-        await message.reply_text("🚫 Sorry, this command is only for the bot owner(s).")
-        return False
-    return True
-
 
 # ===== HELPERS =====
 def sanitize_filename(name: str, fallback: str) -> str:
