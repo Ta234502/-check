@@ -126,7 +126,7 @@ async def check_fsub(user_id: int) -> bool:
         return True
 
 
-async async def ensure_user_allowed(message) -> bool:
+async def ensure_user_allowed(message) -> bool:
     user = message.from_user
     if not user:
         return False
